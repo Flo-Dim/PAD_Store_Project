@@ -1,0 +1,107 @@
+{% block title %}
+	Imprimer
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		table,
+		th,
+		tr,
+		thead,
+		tbody,
+		td {
+			border: 1px solid black;
+		}
+		td {
+			text-align: center;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<main class="container-fluid p-5">
+		<div class="row flex-row align-items-end mb-4">
+            <img src="{{ asset('images/logoPAD.png') }}" style="width:300px;" alt="logo">
+			
+			<h1 class="col" style="font-weight: var(--fw-2);">DEMANDE DE SORTIE MAGASIN OU DE REINTEGRATION</h1>
+		</div>
+
+		<table class="table table-bordered table-light">
+			<colgroup>
+				<col style="width: 70px">
+				<col style="width: 109px">
+				<col style="width: 135px">
+				<col style="width: 226px">
+				<col style="width: 77px">
+				<col style="width: 77px">
+				<col style="width: 80px">
+				<col style="width: 94px">
+				<col style="width: 81px">
+				<col style="width: 134px">
+			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="3">SORTIE OU REINTEGRATION</th>
+					<th>IMPUTATION</th>
+					<th colspan="3">RESERVATION DEMANDEE</th>
+					<th colspan="3">SECTION DEMANDEUR</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>N° LIGNE<br></th>
+					<th>CODE COMPTABLE<br></th>
+					<th>CODE ARTICLE<br></th>
+					<th>DESIGNATION</th>
+					<th>CODE UNITE<br></th>
+					<th>PRIX UNITAIRE<br></th>
+					<th>PRIX TOTAL<br></th>
+					<th>DEMANDE</th>
+					<th>SERVICE</th>
+					<th>RESTE A SERVIR<br></th>
+				</tr>
+
+				
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td> FCFA</td>
+						<td> FCFA</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				
+				<tr>
+					<th colspan="3">RECEPTION DEMANDE<br></th>
+					<th>RECEPTION REALISEE<br></th>
+					<th colspan="2">SAISIE</th>
+					<th colspan="2">EMETTEUR</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<tr>
+					<th colspan="2">DATE</th>
+					<th>LIEU</th>
+					<th rowspan="2">NOM:<br><br>VISA:<br><br>DATE:<br></th>
+					<th>DATE</th>
+					<th>VISA</th>
+					<th colspan="2" rowspan="2">NOM:
+						<br><br>VISA:<br><br>DATE:<br></th>
+					<th colspan="2">RESPONSABLE</th>
+				</tr>
+				<tr>
+					<td colspan="2"></td>
+					<td></td>
+					<td align="center"></td>
+					<td></td>
+					<th colspan="2">NOM:<br><br>VISA:<br><br>DATE:
+						<br></th>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+{% endblock %}

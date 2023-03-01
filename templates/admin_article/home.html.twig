@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PAD | Admin | Articles{% endblock %}
+
+{% block stylesheets %}
+<style>
+    a {
+        font-size:14px;
+        font-weight:700;
+      }
+    .superNav {
+        font-size:13px;
+      }
+    .form-control {
+        outline:none !important;
+        box-shadow: none !important;
+      }
+    @media screen and (max-width:540px){
+        .centerOnMobile {
+          text-align:center;
+        }
+      }
+      
+</style>
+{% endblock %}
+
+{% block body %}
+
+  <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="fa-solid fa-shop me-2"></i><strong>PAD STORE</strong></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+   
+      <div class="mx-auto my-3 d-lg-none d-sm-block d-xs-block">
+        <div class="input-group">
+          <span class="border-warning input-group-text bg-warning text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control border-warning" style="color:#7a7a7a">
+          <button class="btn btn-warning text-white">Search</button>
+        </div>
+      </div>
+      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="ms-auto d-none d-lg-block">
+          <div class="input-group">
+            <span class="border-warning input-group-text bg-warning text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" class="form-control border-warning" style="color:#7a7a7a">
+            <button class="btn btn-warning text-white">Search</button>
+          </div>
+        </div>
+        <ul class="navbar-nav ms-auto ">
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase active" aria-current="page" href="{{ path("app_admin_article")}}">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href=" {{ path("app_admin_position")}}">Positions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{ path("app_admin_category")}}">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{ path("app_admin_budget")}}">Budgets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{ path("app_admin_users")}}">Users</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto ">
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{path('app_logout')}}"><i class="fa-solid fa-circle-user me-1"></i> Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav><br>
+  <a class="btn btn-success" href="{{ path("app_admin_article_add")}}">Add Article</a>
+  <table class="table caption-top">
+    <caption><h2> Articles</h2></caption>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Description</th>
+        <th scope="col">Category</th>
+        <th scope="col">Availiable</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for article in articles %}
+        <tr>
+            
+            <td>{{ article.id }}</td>
+            <td>{{ article.Name}} </td>
+            <td>{{ article.Price }}</td>
+            <td>{{ article.Description }}</td>
+            <td>{{ article.category.Name }}</td>
+            <td>{{ article.available }}</td>
+            <td> <a href="{{ path("app_admin_article_modify", {id: article.id})}}" class="btn btn-success"> Update</a>
+            <a href="{{ path("app_admin_article_delete", {id: article.id})}}" class="btn btn-danger" style="margin-left: 5px;"> Delete</a>
+               
+            </td>
+            {% endfor %}
+          </tr>
+          
+    </tbody>
+  </table>
+{% endblock %}

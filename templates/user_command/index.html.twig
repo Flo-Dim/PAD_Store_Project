@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} PAD | Articles{% endblock %}
+
+{% block stylesheets %}
+<style>
+    a {
+        font-size:14px;
+        font-weight:700;
+      }
+    .superNav {
+        font-size:13px;
+      }
+    .form-control {
+        outline:none !important;
+        box-shadow: none !important;
+      }
+    @media screen and (max-width:540px){
+        .centerOnMobile {
+          text-align:center;
+        }
+      }
+      
+</style>
+{% endblock %}
+
+{% block body %}
+
+  <nav class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm">
+    <div class="container">
+        <div class="nav-item">
+            <img src="{{ asset('images/logoPAD.png') }}"
+        style="width:50px;" alt="logo">
+        </div> 
+      <a class="navbar-brand" href="#"><i class="fa-solid fa-shop me-2"></i> <strong>PAD STORE</strong></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+   
+      <div class="mx-auto my-3 d-lg-none d-sm-block d-xs-block">
+        <div class="input-group">
+          <span class="border-primary input-group-text bg-primary text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control border-primary" style="color:#7a7a7a">
+          <button class="btn btn-primary text-white">Search</button>
+        </div>
+      </div>
+      <div class=" collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="ms-auto d-none d-lg-block">
+          <div class="input-group">
+            <span class="border-primary input-group-text bg-primary text-white"><i class="fa-solid fa-magnifying-glass"></i></span>
+            <input type="text" class="form-control border-primary" style="color:#7a7a7a">
+            <button class="btn btn-primary text-white">Search</button>
+          </div>
+        </div>
+        <ul class="navbar-nav ms-auto ">
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" aria-current="page" href="{{ path("app_user_article")}}">Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase active" href="{{ path("app_user_command")}}">Commands</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{ path("app_user_home_command")}}">View Commands</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto ">
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{path('app_logout')}}"><i class="fa-solid fa-circle-user me-1"></i> Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav><br>
+  <div><h2>Budget left : {{ total }}
+
+  </h2></div>
+  <a href="{{path('app_pdf_generator')}}" class="btn btn-primary position-relative" style="float: right ; margin-right:50px; margin-top:10px;">
+    Print Command
+  </a>
+  <a href="{{ path("app_user_view_command")}}" class="btn btn-primary position-relative" style="float: right ; margin-right:50px; margin-top:10px;">
+    Complete command 
+  </a>
+  <table class="table table-striped caption-top">
+    <caption><h2>Command </h2></caption>
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Article Name</th>
+        <th scope="col">Category</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Unit Price</th>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+     
+        {% for element in datacommand %}
+        <tr>
+            <td>{{ element.article.id}}</td>
+            <td>{{ element.article.Name}}</td>
+            <td>{{ element.article.category.Name}}</td>
+            <td>{{ element.quantity}}</td>
+            <td>{{ element.article.Price}} FCFA</td>
+            <td>{{ element.quantity * element.article.Price }} FCFA</td>
+            <td> <a href="{{path("app_user_command_add", {id: element.article.id})}}" class="btn btn-succes"> <h3><i class="bi bi-plus-circle-fill" style="color: blue;"></i></h3></a>
+                <a href="{{path("app_user_command_remove", {id: element.article.id})}}" class="btn btn-warnin"><h3><i class="bi bi-dash-circle-fill" style="color: grey;"></i></h3></a>
+                <a href="{{path("app_user_command_delete", {id: element.article.id})}}" class="btn btn-dange"><h3><i class="bi bi-x-circle-fill" style=" color:red;"></i> </h3></a>
+            </td>
+            <td></td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" class="text-center">No commands</td>
+        </tr>
+        {% endfor %}
+          
+    </tbody>
+    <tfoot><br>
+        <tr>
+            <td colspan="3" class="text-center"><h4><b>Total</b> </h4></td>
+            <td colspan="text-end"><h4><b>{{ total }} FCFA</b></h4></td>
+            
+        </tr>
+    </tfoot>
+  </table>
+{% endblock %}
