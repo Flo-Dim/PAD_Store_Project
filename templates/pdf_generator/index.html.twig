@@ -49,9 +49,10 @@
 			</thead>
 			<tbody>
 				<tr>
-					<th>N° LIGNE<br></th>
+					
+					<th>ID ARTICLE<br></th>
 					<th>CODE COMPTABLE<br></th>
-					<th>CODE ARTICLE<br></th>
+					<th>CODE / NOM ARTICLE<br></th>
 					<th>DESIGNATION</th>
 					<th>CODE UNITE<br></th>
 					<th>PRIX UNITAIRE<br></th>
@@ -60,25 +61,29 @@
 					<th>SERVICE</th>
 					<th>RESTE A SERVIR<br></th>
 				</tr>
-
-				
+					
+				{% for element in datacommand %}
 					<tr>
+						<td>{{element["articles"].Id}}</td>
 						<td></td>
+							
+						<td>{{element["articles"].Name}}</td>
+							
 						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td> FCFA</td>
-						<td> FCFA</td>
+						<td> {{element["quantity"]}}</td>
+						<td>{{element["articles"].Price}} FCFA</td>
+						<td> {{element["articles"].Price * element["quantity"]}}FCFA</td>
 						<td></td>
 						<td></td>
 						<td></td>
 					</tr>
+					{% endfor %}
+							
 				
 				<tr>
 					<th colspan="3">RECEPTION DEMANDE<br></th>
 					<th>RECEPTION REALISEE<br></th>
-					<th colspan="2">SAISIE</th>
+					<th colspan="2">TOTAL: {{amount}}</th>
 					<th colspan="2">EMETTEUR</th>
 					<th></th>
 					<th></th>
@@ -86,21 +91,22 @@
 				<tr>
 					<th colspan="2">DATE</th>
 					<th>LIEU</th>
-					<th rowspan="2">NOM:<br><br>VISA:<br><br>DATE:<br></th>
+					<th rowspan="2">NOM:<br><br>VISA:<br><br>DATE: {{"now"|date("m/d/Y") }}<br></th>
 					<th>DATE</th>
 					<th>VISA</th>
-					<th colspan="2" rowspan="2">NOM:
-						<br><br>VISA:<br><br>DATE:<br></th>
+					<th colspan="2" rowspan="2">NOM: {{app.user.userIdentifier}}
+						<br><br>VISA:<br><br>DATE: {{"now"|date("m/d/Y") }}<br></th>
 					<th colspan="2">RESPONSABLE</th>
 				</tr>
 				<tr>
-					<td colspan="2"></td>
+					<td colspan="2">{{"now"|date("m/d/Y") }}</td>
 					<td></td>
 					<td align="center"></td>
 					<td></td>
-					<th colspan="2">NOM:<br><br>VISA:<br><br>DATE:
+					<th colspan="2">NOM: <br><br>VISA:<br><br>DATE:{{"now"|date("m/d/Y") }}
 						<br></th>
 				</tr>
+				
 			</tbody>
 		</table>
 	</main>

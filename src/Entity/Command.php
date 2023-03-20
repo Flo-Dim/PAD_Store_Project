@@ -31,10 +31,14 @@ class Command
     #[ORM\Column]
     private ?int $quantity = null;
 
+    #[ORM\OneToMany(mappedBy: 'command', targetEntity: Quantity::class)]
+    private Collection $quantities;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->quantities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,6 +126,36 @@ class Command
     public function setQuantity(int $quantity): self
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quantity>
+     */
+    public function getQuantities(): Collection
+    {
+        return $this->quantities;
+    }
+
+    public function addQuantity(Quantity $quantity): self
+    {
+        if (!$this->quantities->contains($quantity)) {
+            $this->quantities->add($quantity);
+            $quantity->setCommand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuantity(Quantity $quantity): self
+    {
+        if ($this->quantities->removeElement($quantity)) {
+            // set the owning side to null (unless already changed)
+            if ($quantity->getCommand() === $this) {
+                $quantity->setCommand(null);
+            }
+        }
 
         return $this;
     }

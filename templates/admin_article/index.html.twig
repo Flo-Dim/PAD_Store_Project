@@ -31,7 +31,7 @@
                       <div class="form-outline mb-4">
                         {{ form_row(ArticleForm.Description) }}
                       </div>
-
+                      {%  %}
                       <div class="form-outline mb-4">
                         {{ form_row(ArticleForm.category) }}
                       </div>
@@ -40,7 +40,7 @@
                         {{ form_row(ArticleForm.available) }}
                       </div>
                     <div class="text-center pt-1 mb-5 pb-1">
-                      <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" >Ajouter</button>
+                      <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" onclick="" >Ajouter</button>
                       
                     </div>
                    
@@ -63,8 +63,5 @@
       </div>
     </div>
   </section>
-<script>
-  var a=document.getElementsById("article_form_Description");
-  alert(a);
-</script>
+
 {% endblock %}

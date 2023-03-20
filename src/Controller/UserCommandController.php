@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Entity\Command;
 use App\Entity\LeftBudget;
+use App\Entity\Quantity;
+use App\Entity\User;
 use App\Repository\ArticleRepository;
 use App\Repository\CommandRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,7 +28,8 @@ class UserCommandController extends AbstractController
         $datacommand=[];
         $total=0;
         $lbudget= 0;
-       // $budget= $user->getLeftBudget();
+        //$user->;
+        //$budget= $user->getLeftBudget();
         foreach($command as $id => $quantity){
             $article = $ArtRepo->find($id);
             $datacommand[] = [
@@ -57,9 +60,7 @@ class UserCommandController extends AbstractController
         }
 
         $session->set("command",$command);
-        return $this->redirectToRoute('app_user_command');
-
-        
+        return $this->redirectToRoute('app_user_command');        
     }
 
     #[Route('/user/command/remove/{id}', name: 'app_user_command_remove')]
@@ -108,28 +109,29 @@ class UserCommandController extends AbstractController
     {   
        
        $total=0.0;
+       $user = $this->getUser();
        $commands= new Command();
        $command = $session->get("command",[]);
        $datacommand=[];
        foreach($command as $id => $quantity){
-        $article = $ArtRepo->find($id);
-        $datacommand[] = [
+            $article = $ArtRepo->find($id);
+            $datacommand[] = [
             "articles"=>$article,
             "quantity"=>$quantity
                          ];
-        $articles = $article->getName();
-        $commands->addArticle($article);
-        $commands->setQuantity($quantity);
-        $total += $article->getPrice()*$quantity;
-        $commands->setAmount($total); 
-        $commands->setDate(new \DateTime());
-        $entityManager->persist($commands);
-        $entityManager->flush();    
-
-    }
+            $cart[$article->getId()]=['quantity'=>$quantity];
+            $commands->addArticle($article);
+            $commands->setQuantity($quantity);
+            $commands->addUser($user);
+            $total += $article->getPrice()*$quantity;
+            $commands->setAmount($total); 
+            $commands->setDate(new \DateTime());
+            $entityManager->persist($commands);
+            $entityManager->flush(); 
+        }
     
   
-     return $this->render('user_command/commandview.html.twig', compact("commands","articles","quantity"));
+     return $this->redirectToRoute('app_user_home_command', compact("commands"));
            
     }
 
@@ -137,10 +139,8 @@ class UserCommandController extends AbstractController
     #[Route('/user/command/homecommand', name: 'app_user_home_command')]
     public function homeCommand(CommandRepository $ComRep): Response
     {
-
-        return $this->render('user_command/commandview.html.twig', [
-            'commands' => $ComRep->findAll()
-        ]);
+        $user = $this->getUser();
+        return $this->render('user_command/commandview.html.twig', ['commands' => $ComRep->findAll(),'user'=>$user]);
     }
 
-}    
+}

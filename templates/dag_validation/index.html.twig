@@ -54,9 +54,13 @@
         </div>
         <ul class="navbar-nav ms-auto ">
           <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="{{ path("app_dag_view_command")}}">Commands</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link mx-2 text-uppercase" href="{{path('app_logout')}}"><i class="fa-solid fa-circle-user me-1"></i> Logout</a>
           </li>
         </ul>
+       
       </div>
     </div>
   </nav><br>
@@ -65,28 +69,36 @@
     <thead>
       <tr>
         <th scope="col">ID</th>
-        <th scope="col">Articles</th>
-        <th scope="col">Quantity</th>
         <th scope="col">User Name</th>
         <th scope="col">Amount</th>
         <th scope="col">Date</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
+        <th scope="col">Confirm</th>
+        <th scope="col">Deny</th>
+        <th scope="col">Print</th>
       </tr>
     </thead>
     <tbody>
    <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    {% for command in commands %}
+      
+    <td>{{ command.id }}</td>
+    <td>
+      
+    </td>
+    <td>{{ command.amount }} FCFA</td>
+    <td>{{ command.Date|date("m/d/Y") }}</td>
     <td><a href="#"> <h2><i class="bi bi-check-circle" style="color:green ;"></i></h2></a></td>
     <td><a href="#"> <h2><i class="bi bi-x-circle-fill" style="color:red;"></i></h2></a></td>
+    <td><a href="#" class="btn btn-success">Print Invoice</a></td>
+      
+    {% endfor %}
+    
    </tr>    
     </tbody>
+    {{ dump(commands) }}
+    
   </table>
+  
   
  
 {% endblock %}
